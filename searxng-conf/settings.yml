@@ -8,16 +8,6 @@ use_default_settings: true
 general:
   debug: false
   instance_name: "İzdera Meta-Search Engine"
-  privacypolicy_url: false
-  donation_url: false
-  contact_url: false
-  enable_metrics: false
-
-brand:
-  new_issue_url: false
-  docs_url: false
-  public_instances: false
-  wiki_url: false
 
 search:
   safe_search: 1
@@ -33,26 +23,18 @@ search:
 server:
   port: 8080
   bind_address: "0.0.0.0"
-  # Dağıtım sırasında SEARXNG_SECRET ortam değişkeni ile ezilebilir
   secret_key: "izdera-searxng-default-secret-change-in-prod"
   limiter: false
   public_instance: false
   image_proxy: false
-  http_protocol_version: "1.1"
-  method: "GET"
 
 ui:
-  static_use_hash: true
   default_locale: "tr"
   query_in_title: false
   infinite_scroll: false
   center_alignment: true
-  default_theme: simple
 
 outgoing:
   request_timeout: 3.0
   max_request_timeout: 6.0
-  useragent_suffix: "Izdera"
-  pool_connections: 100
-  pool_maxsize: 20
   enable_http2: true
