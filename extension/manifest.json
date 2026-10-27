@@ -1,0 +1,39 @@
+{
+  "manifest_version": 3,
+  "name": "İzdera — Gizlilik Odaklı Arama",
+  "short_name": "İzdera",
+  "version": "0.1.0",
+  "description": "Adres çubuğu aramalarınızı İzdera'ya yönlendirir. İzini sür, takip edilmeden keşfet.",
+  "homepage_url": "https://izdera.com",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "chrome_settings_overrides": {
+    "search_provider": {
+      "name": "İzdera",
+      "keyword": "izdera.com",
+      "search_url": "https://izdera.com/search?q={searchTerms}",
+      "suggest_url": "https://izdera.com/api/suggest?q={searchTerms}",
+      "favicon_url": "https://izdera.com/icon-192.png",
+      "encoding": "UTF-8",
+      "is_default": true
+    }
+  },
+  "chrome_url_overrides": {
+    "newtab": "newtab.html"
+  },
+  "omnibox": {
+    "keyword": "iz"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
+  "permissions": ["storage"]
+}

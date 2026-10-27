@@ -1,0 +1,188 @@
+/* ==========================================================================
+   İzdera — Tasarım sistemi (Tailwind CSS v4, CSS-first yapılandırma)
+   - tailwind.config.js yok; tüm token'lar @theme bloğunda.
+   - Renkler oklch: WCAG kontrastı için açıklık (L) kanalı ayrı ayarlandı.
+   - Tema geçişi: <html class="dark"> (layout.tsx'teki önyükleme betiği ayarlar).
+   ========================================================================== */
+
+@import "tailwindcss";
+
+/* `dark:` varyantı medya sorgusu yerine .dark sınıfına bağlanır (manuel tema seçimi). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* --------------------------------------------------------------------------
+   Ham tema değişkenleri — Açık mod (sıcak "kâğıt" tonu)
+   -------------------------------------------------------------------------- */
+:root {
+  --bg: oklch(0.985 0.004 85);
+  --surface: oklch(1 0 0);
+  --elevated: oklch(0.965 0.005 85);
+  --line: oklch(0.9 0.006 265);
+  --line-strong: oklch(0.82 0.008 265);
+  --fg: oklch(0.22 0.015 265);
+  --muted: oklch(0.44 0.015 265);
+  --subtle: oklch(0.58 0.012 265);
+  --accent: oklch(0.6 0.15 58);
+  --accent-soft: oklch(0.6 0.15 58 / 0.14);
+  --link: oklch(0.45 0.16 265);
+  --visited: oklch(0.45 0.14 315);
+  --crumb: oklch(0.47 0.09 160);
+  --glow: oklch(0.6 0.15 58 / 0.22);
+  color-scheme: light;
+}
+
+/* --------------------------------------------------------------------------
+   Koyu mod — Obsidyen (#0f1117 ≈ oklch(0.17 0.012 265))
+   -------------------------------------------------------------------------- */
+.dark {
+  --bg: oklch(0.17 0.012 265);
+  --surface: oklch(0.205 0.013 265);
+  --elevated: oklch(0.235 0.014 265);
+  --line: oklch(0.29 0.013 265);
+  --line-strong: oklch(0.37 0.014 265);
+  --fg: oklch(0.94 0.006 265);
+  --muted: oklch(0.72 0.014 265);
+  --subtle: oklch(0.58 0.014 265);
+  --accent: oklch(0.81 0.13 75);
+  --accent-soft: oklch(0.81 0.13 75 / 0.14);
+  --link: oklch(0.8 0.09 265);
+  --visited: oklch(0.78 0.09 315);
+  --crumb: oklch(0.77 0.09 160);
+  --glow: oklch(0.81 0.13 75 / 0.2);
+  color-scheme: dark;
+}
+
+/* Değişkenleri Tailwind yardımcı sınıflarına bağla: bg-bg, text-fg, border-line ... */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-elevated: var(--elevated);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-link: var(--link);
+  --color-visited: var(--visited);
+  --color-crumb: var(--crumb);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-serif), ui-serif, Georgia, serif;
+}
+
+@theme {
+  --shadow-glow: 0 0 0 4px var(--glow), 0 8px 32px -8px var(--glow);
+  --shadow-card: 0 1px 2px oklch(0 0 0 / 0.06), 0 8px 24px -12px oklch(0 0 0 / 0.18);
+
+  --animate-shimmer: shimmer 1.6s ease-in-out infinite;
+  --animate-fade-up: fade-up 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-trail: trail 2.4s ease-in-out infinite;
+  --animate-listen: listen 1.2s ease-out infinite;
+
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  @keyframes fade-up {
+    from { opacity: 0; transform: translate3d(0, 6px, 0); }
+    to { opacity: 1; transform: translate3d(0, 0, 0); }
+  }
+  /* Logo izindeki noktaların sırayla belirmesi */
+  @keyframes trail {
+    0%, 100% { opacity: 0.35; }
+    50% { opacity: 1; }
+  }
+  @keyframes listen {
+    0% { box-shadow: 0 0 0 0 var(--glow); }
+    100% { box-shadow: 0 0 0 12px transparent; }
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Temel katman
+   -------------------------------------------------------------------------- */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-feature-settings: "cv11", "ss01";
+  }
+  ::selection {
+    background: var(--accent-soft);
+    color: var(--fg);
+  }
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  /* Tema değişiminde tüm sayfada yumuşak renk geçişi (yalnızca renk, layout değil) */
+  .theme-transition,
+  .theme-transition * {
+    transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease !important;
+  }
+  input[type="search"]::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Bileşen katmanı — tekrar eden desenler
+   -------------------------------------------------------------------------- */
+@layer components {
+  /* İskelet yükleme: GPU dostu background-position animasyonu */
+  .skeleton {
+    border-radius: 0.375rem;
+    background: linear-gradient(
+      90deg,
+      var(--elevated) 25%,
+      color-mix(in oklch, var(--elevated), var(--fg) 6%) 50%,
+      var(--elevated) 75%
+    );
+    background-size: 200% 100%;
+    animation: var(--animate-shimmer);
+  }
+
+  /* Snippet içindeki vurgulanan arama terimleri */
+  .hl {
+    color: var(--fg);
+    font-weight: 600;
+    background: none;
+  }
+
+  /* Hover'da soldan sağa akan zarif alt çizgi */
+  .link-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.3s cubic-bezier(0.22, 1, 0.36, 1), color 0.2s ease;
+  }
+  .link-underline:hover,
+  .link-underline:focus-visible {
+    background-size: 100% 1px;
+  }
+
+  /* Arka plandaki çok hafif "iz" doku (yalnızca ana sayfa) */
+  .trail-backdrop {
+    background-image:
+      radial-gradient(ellipse 60% 50% at 50% 0%, var(--accent-soft), transparent 70%),
+      radial-gradient(circle at 1px 1px, color-mix(in oklch, var(--fg), transparent 92%) 1px, transparent 0);
+    background-size: 100% 100%, 28px 28px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

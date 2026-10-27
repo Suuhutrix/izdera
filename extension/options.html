@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <title>İzdera — Eklenti Ayarları</title>
+    <style>
+      body { margin: 0; padding: 20px; min-width: 340px; font: 14px/1.5 system-ui, "Segoe UI", sans-serif; color: #1d2030; }
+      @media (prefers-color-scheme: dark) { body { background: #0f1117; color: #eceef3; } }
+      h1 { margin: 0 0 16px; font-size: 16px; }
+      fieldset { margin: 0 0 16px; padding: 0; border: 0; }
+      legend { margin-bottom: 6px; font-weight: 600; font-size: 13px; }
+      label { display: flex; gap: 8px; align-items: flex-start; margin: 4px 0; cursor: pointer; }
+      small { display: block; opacity: 0.65; }
+      input[type="url"] { width: 100%; padding: 8px 10px; border: 1px solid #8884; border-radius: 8px; background: transparent; color: inherit; font: inherit; }
+      button { padding: 8px 16px; border: 0; border-radius: 999px; background: #f0b65c; color: #0f1117; font-weight: 600; cursor: pointer; }
+      #status { margin-left: 10px; font-size: 12px; opacity: 0.75; }
+    </style>
+    <script src="options.js" defer></script>
+  </head>
+  <body>
+    <h1>İzdera eklenti ayarları</h1>
+
+    <fieldset>
+      <legend>Yeni sekme</legend>
+      <label><input type="radio" name="newtabMode" value="local" /> <span>Hafif yerel sayfa <small>Anında açılır, ağ isteği yapmaz</small></span></label>
+      <label><input type="radio" name="newtabMode" value="remote" /> <span>Tam İzdera arayüzü <small>Son aramalar ve ayarlarınızla</small></span></label>
+    </fieldset>
+
+    <fieldset>
+      <legend>İzdera adresi</legend>
+      <input id="baseUrl" type="url" placeholder="https://izdera.com" />
+      <small>Kendi sunucunuz ya da yerel geliştirme (http://localhost:3000) için. Adres çubuğu varsayılan arama motoru her zaman izdera.com'u kullanır.</small>
+    </fieldset>
+
+    <button id="save" type="button">Kaydet</button><span id="status" role="status"></span>
+  </body>
+</html>

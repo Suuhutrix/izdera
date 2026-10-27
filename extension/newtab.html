@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Yeni Sekme — İzdera</title>
+    <link rel="icon" href="icons/icon-32.png" />
+    <link rel="stylesheet" href="newtab.css" />
+    <!-- MV3 CSP: satır içi betik yasak → tüm mantık newtab.js'de -->
+    <script src="newtab.js" defer></script>
+  </head>
+  <body>
+    <main>
+      <div class="brand">
+        <svg viewBox="0 0 64 64" aria-hidden="true" class="mark">
+          <circle cx="12" cy="52" r="2.4" opacity="0.4" />
+          <circle cx="19" cy="46" r="2.9" opacity="0.65" />
+          <circle cx="26.5" cy="40.5" r="3.4" opacity="0.9" />
+          <circle cx="40" cy="27" r="10.5" fill="none" stroke="currentColor" stroke-width="4.6" />
+        </svg>
+        <h1 class="wordmark">izdera</h1>
+      </div>
+
+      <form id="search-form" method="get" action="https://izdera.com/search" role="search">
+        <input id="q" name="q" type="search" placeholder="İzini sür…" autocomplete="off" autofocus aria-label="Arama sorgusu" />
+        <button type="submit" aria-label="Ara">→</button>
+      </form>
+
+      <p class="tagline">Takip edilmeden keşfet.</p>
+    </main>
+    <footer>
+      <a id="options-link" href="#">Eklenti ayarları</a>
+    </footer>
+  </body>
+</html>

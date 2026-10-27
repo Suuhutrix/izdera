@@ -1,0 +1,30 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# İzdera — Yerel & VPS SearXNG Kurulumu
+# Çalıştırmak için: docker compose up -d
+# Test:             http://localhost:8080/search?q=istanbul&format=json
+# ─────────────────────────────────────────────────────────────────────────────
+
+services:
+  searxng:
+    image: searxng/searxng:latest
+    container_name: izdera-searxng
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./searxng/settings.yml:/etc/searxng/settings.yml:ro
+    environment:
+      - BIND_ADDRESS=0.0.0.0:8080
+      - SEARXNG_SECRET=${SEARXNG_SECRET:-izdera-local-secret-key}
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETGID
+      - SETUID
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "2"
+
