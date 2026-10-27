@@ -1,6 +1,6 @@
 # ─────────────────────────────────────────────────────────────────────────────
 # İzdera — Özel SearXNG Yapılandırması
-# JSON çıktısı açık, hız sınırı (rate-limiter) İzdera backend'i için kapalı.
+# JSON çıktısı açık, hız sınırı kapalı, optimize motor havuzu.
 # ─────────────────────────────────────────────────────────────────────────────
 
 use_default_settings: true
@@ -15,7 +15,6 @@ search:
   default_lang: "tr-TR"
   ban_time_on_fail: 5
   max_ban_time_on_fail: 120
-  # KRİTİK: İzdera API'sinin SearXNG ile konuşabilmesi için JSON formatı açık olmalı
   formats:
     - html
     - json
@@ -35,6 +34,40 @@ ui:
   center_alignment: true
 
 outgoing:
-  request_timeout: 3.0
-  max_request_timeout: 6.0
+  request_timeout: 4.5
+  max_request_timeout: 8.0
   enable_http2: true
+
+# Arama motorlarını veri merkezi IP'lerine göre optimize et:
+engines:
+  - name: google
+    engine: google
+    shortcut: go
+    disabled: false
+  - name: google cse
+    engine: google_cse
+    disabled: false
+  - name: bing
+    engine: bing
+    shortcut: bi
+    disabled: false
+  - name: brave
+    engine: brave
+    shortcut: br
+    disabled: false
+  - name: duckduckgo
+    engine: duckduckgo
+    shortcut: ddg
+    disabled: false
+  - name: startpage
+    engine: startpage
+    shortcut: sp
+    disabled: false
+  - name: qwant
+    engine: qwant
+    shortcut: qw
+    disabled: false
+  - name: wikipedia
+    engine: wikipedia
+    shortcut: wp
+    disabled: false
