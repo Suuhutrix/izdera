@@ -12,7 +12,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ./searxng/settings.yml:/etc/searxng/settings.yml:ro
+      - ./searxng-conf/settings.yml:/etc/searxng/settings.yml:ro
     environment:
       - BIND_ADDRESS=0.0.0.0:8080
       - SEARXNG_SECRET=${SEARXNG_SECRET:-izdera-local-secret-key}
@@ -27,4 +27,3 @@ services:
       options:
         max-size: "10m"
         max-file: "2"
-

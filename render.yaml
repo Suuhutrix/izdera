@@ -1,19 +1,15 @@
 # ─────────────────────────────────────────────────────────────────────────────
 # Render.com Ücretsiz (0 TL) Tek Tıkla SearXNG Kurulum Şablonu (Blueprint)
-# Kullanım: Render Dashboard → New → Blueprint → Bu GitHub deposunu seçin.
-# Size verilen https://izdera-searxng-xxxx.onrender.com adresini
-# Vercel'de SEARXNG_INSTANCES ortam değişkenine yapıştırın.
 # ─────────────────────────────────────────────────────────────────────────────
 
 services:
   - type: web
     name: izdera-searxng
     runtime: docker
-    dockerfilePath: ./searxng/Dockerfile
-    dockerContext: ./searxng
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
     plan: free
     region: frankfurt
-    healthCheckPath: /healthz
     envVars:
       - key: SEARXNG_SECRET
         generateValue: true
@@ -21,4 +17,3 @@ services:
         value: 0.0.0.0:8080
       - key: PORT
         value: "8080"
-

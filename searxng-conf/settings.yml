@@ -56,4 +56,3 @@ outgoing:
   pool_connections: 100
   pool_maxsize: 20
   enable_http2: true
-
